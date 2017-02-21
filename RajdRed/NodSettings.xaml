@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="RajdRed.NodSettings"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:m="clr-namespace:RajdRed.Models.Adds"
+             mc:Ignorable="d" 
+             Height="100" Width="100"
+             Loaded="UserControl_Loaded">
+    <ItemsControl>
+        <ItemsControl.Resources>
+            <Style x:Key="Scaling" TargetType="UserControl">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="LayoutTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" CenterX="15" CenterY="15"/>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="2" ScaleY="2" CenterX="15" CenterY="15"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ItemsControl.Resources>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <Ellipse Grid.ColumnSpan="5" Grid.RowSpan="5" Opacity="0.7">
+                <Ellipse.Fill>
+                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" >
+                        <RadialGradientBrush.GradientStops>
+                            <GradientStop Color="Transparent" Offset="0.15" />
+							<GradientStop Color="#CCE8FE" Offset="0.35" />
+                        </RadialGradientBrush.GradientStops>
+                    </RadialGradientBrush>
+                </Ellipse.Fill>
+            </Ellipse>
+            <UserControl Grid.Column="2" Grid.Row="1" 
+                         PreviewMouseLeftButtonDown="Association_PreviewMouseLeftButtonDown"
+                         MouseEnter="Association_MouseEnter" MouseLeave="Association_MouseLeave"
+                         Content="{Binding Association}">
+                <UserControl.Resources>
+                    <Style TargetType="UserControl">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="2" ScaleY="2" CenterX="15" CenterY="15"/>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="2.5" ScaleY="2.5" CenterX="15" CenterY="15"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </UserControl.Resources>
+            </UserControl>
+            <UserControl Grid.Column="1" Grid.Row="2" Style="{StaticResource Scaling}" 
+                         MouseLeftButtonDown="Aggregation_MouseLeftButtonDown"
+                         MouseEnter="Aggregation_MouseEnter" MouseLeave="Aggregation_MouseLeave"
+                         Content="{Binding Aggregation}">
+            </UserControl>
+            <UserControl Grid.Column="3" Grid.Row="2" Style="{StaticResource Scaling}" 
+                         MouseLeftButtonDown="Composition_MouseLeftButtonDown"
+                         MouseEnter="Composition_MouseEnter" MouseLeave="Composition_MouseLeave"
+                         Content="{Binding Composition}">
+            </UserControl>
+            <UserControl Grid.Column="2" Grid.Row="3" Style="{StaticResource Scaling}"
+                         MouseLeftButtonDown="Generalization_MouseLeftButtonDown"
+                         MouseEnter="Generalization_MouseEnter" MouseLeave="Generalization_MouseLeave"
+                         Content="{Binding Generalization}">
+            </UserControl>
+        </Grid>
+    </ItemsControl>
+</UserControl>

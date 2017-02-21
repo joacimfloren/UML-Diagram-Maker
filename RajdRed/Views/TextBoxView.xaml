@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="RajdRed.Views.TextBoxView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="10" d:DesignWidth="30"
+             Background="Transparent"
+             MouseMove="UserControl_MouseMove"
+             MouseUp="UserControl_MouseUp"
+             >
+    <Grid>
+        <Border BorderThickness="1" 
+                CornerRadius="2,2,2,2">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TextBoxModel.IsSelected}" Value="True">
+                            <Setter Property="Background" Value="#5581BEF7"></Setter>
+                            <Setter Property="BorderBrush" Value="#58ACFA"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+        <TextBlock Text="{Binding TextBoxModel.Text}" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Cursor="SizeAll"
+                   Padding="5"
+                   MouseLeftButtonDown="TextBlock_MouseLeftButtonDown">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Visibility" Value="Visible"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TextBoxModel.Editable}" Value="True">
+                            <Setter Property="Visibility" Value="Hidden"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <TextBox Name="TextBoxField"
+                     BorderThickness="1"
+                     Background="Transparent"
+                     Text="{Binding TextBoxModel.Text}"
+                     >
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="Visibility" Value="Hidden"></Setter>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding TextBoxModel.Editable}" Value="True">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+    </Grid>
+</UserControl>

@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="RajdRed.Views.NodCanvasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Height="{Binding NodCanvasModel.Height}" 
+             Width="{Binding NodCanvasModel.Width}"
+             MouseDown="UserControl_MouseDown"
+             MouseMove="UserControl_MouseMove"
+             MouseUp="UserControl_MouseUp"
+             MouseEnter="UserControl_MouseEnter"
+             MouseLeave="UserControl_MouseLeave"
+             HorizontalContentAlignment="Center"
+             VerticalContentAlignment="Center"
+             Background="Transparent">
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="MouseEnter">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ContentScale"
+                                         Storyboard.TargetProperty="ScaleX" 
+                                         To="1.5" Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="ContentScale"
+                                         Storyboard.TargetProperty="ScaleY" 
+                                         To="1.5" Duration="0:0:0.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="MouseLeave">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="ContentScale"
+                                         Storyboard.TargetProperty="ScaleX" 
+                                         Duration="0:0:0.2"/>
+                    <DoubleAnimation Storyboard.TargetName="ContentScale"
+                                         Storyboard.TargetProperty="ScaleY" 
+                                         Duration="0:0:0.2"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <ItemsControl>
+        <Grid>
+        <Ellipse Width="14" Height="14" StrokeThickness="1">
+                <Ellipse.Resources>
+                    <Style TargetType="Ellipse">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding NodCanvasModel.IsSelected}" Value="true">
+                                <Setter Property="Fill" Value="#5581BEF7"/>
+                                <Setter Property="Stroke" Value="#58ACFA"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Ellipse.Resources>
+        </Ellipse>
+            <ContentPresenter Content="{Binding NodCanvasModel.Path}"
+                      RenderTransformOrigin="0.5 0.5"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      x:Name="Content">
+                <ContentPresenter.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="ContentScale" ScaleX="0.7" ScaleY="0.7"/>
+                </TransformGroup>
+            </ContentPresenter.RenderTransform>
+        </ContentPresenter>
+        </Grid>
+    </ItemsControl>
+    
+</UserControl>

@@ -1,0 +1,103 @@
+﻿<UserControl x:Class="RajdRed.Views.KlassView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:m="clr-namespace:RajdRed.Models"
+             xmlns:vm="clr-namespace:RajdRed.ViewModels"
+             xmlns:v="clr-namespace:RajdRed.Views"
+             xmlns:c="clr-namespace:RajdRed.ViewModels.Commands"
+             xmlns:r="clr-namespace:RajdRed.Repositories"
+             MinHeight="{Binding KlassModel.Height}" 
+             MinWidth="{Binding KlassModel.Width}"
+             MouseMove="UserControl_MouseMove"
+             MouseUp="UserControl_MouseUp"
+             Name="theKlassView"
+             >
+    <UserControl.Resources>
+        <vm:KlassViewModel x:Key="klassVM"></vm:KlassViewModel>
+        <DataTemplate x:Key="NodTemplate" DataType="{x:Type vm:NodKlassViewModel}">
+            <v:NodKlassView/>
+        </DataTemplate>
+
+        <Style TargetType="v:NodKlassView" x:Key="NodKlassViewStyle">
+            <Setter Property="Visibility" Value="Hidden"></Setter>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=InnerBorder, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid Name="OuterGrid" MouseLeave="OuterGrid_MouseLeave" Background="Transparent">
+        <Border PreviewMouseLeftButtonDown="Border_PreviewMouseLeftButtonDown" 
+                MouseEnter="Border_MouseEnter" MouseLeave="Border_MouseLeave" 
+                CornerRadius="2,2,2,2" BorderThickness="1">
+            <Border.Resources>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding KlassModel.IsSelected}" Value="true">
+                            <Setter Property="Background" Value="#5581BEF7"/>
+                            <Setter Property="BorderBrush" Value="#58ACFA"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Resources>
+        </Border>
+        <Grid Name="NodeAttachedGrid">
+            <Border Name="InnerBorder" Margin="15" CornerRadius="2,2,2,2" BorderBrush="Black" 
+                    MouseDown="KlassGrid_MouseDown"
+                    MouseEnter="InnerBorder_MouseEnter"
+                    MouseLeave="InnerBorder_MouseLeave"
+                    BorderThickness="1">
+                <Grid Name="InnerGrid" MouseEnter="InnerGrid_MouseEnter" Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"/>
+                        <RowDefinition Height="40*"/>
+                        <RowDefinition Height="40*"/>
+                    </Grid.RowDefinitions>
+                    <Border Name="bgTopRow" Grid.Row="0" Background="#222931" CornerRadius="2,2,0,0" >
+                        <Grid>
+                            <Label Padding="5" Foreground="White" FontSize="10" HorizontalContentAlignment="Center" 
+                                   FontWeight="Bold" Content="{Binding KlassModel.Header}" />
+                        </Grid>
+                    </Border>
+                    <Grid Name="bgMidRow" Grid.Row="1" Background="#323a45">
+                        <TextBlock Text="{Binding KlassModel.Attributes}" Name="Attributes" Padding="5" Foreground="White"/>
+                    </Grid>
+                    <Border Name="bgBotRow" Background="#222931" Grid.Row="2" CornerRadius="0,0,2,2">
+                        <Grid Grid.Row="2">
+                            <TextBlock Text="{Binding KlassModel.Methods}" Name="Methods" Padding="5" Foreground="White" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+        <ItemsControl ItemsSource="{Binding NodKlassRepository}" ItemTemplate="{StaticResource NodTemplate}" >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="16*"></RowDefinition>
+                            <RowDefinition Height="26*"></RowDefinition>
+                            <RowDefinition Height="26*"></RowDefinition>
+                            <RowDefinition Height="26*"></RowDefinition>
+                            <RowDefinition Height="16*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="16*"/>
+                            <ColumnDefinition Width="26*"/>
+                            <ColumnDefinition Width="26*"/>
+                            <ColumnDefinition Width="26*"/>
+                            <ColumnDefinition Width="16*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Grid.Row" Value="{Binding NodKlassModel.Row}"></Setter>
+                    <Setter Property="Grid.Column" Value="{Binding NodKlassModel.Column}"></Setter>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+    </Grid>
+</UserControl>
